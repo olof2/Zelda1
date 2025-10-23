@@ -306,14 +306,14 @@ namespace Zelda1
         //fixa death och respawn    x
         //nån typ av HUD?
         //patrullerande fiender, random hastighet - utöka fiender hélt enkel    x
-        //dörr + nyckel
-        //zelda winstate
+        //dörr + nyckel             x
+        //zelda winstate            x
         //Zelda alternativt Link skall vara inlåst i ett slott och spelaren måste plocka upp en nyckel för att komma in i slottet och rädda kungariket.
         //Det ska finnas åtminstone 3 floder.För att kors floderna måste spelaren gå på de broar som förbinder land.
 
         //score
-        //animation för hit
-        //testa animation för död
+        //animation för hit         x
+        //testa animation för död   x
         //andra item för score
         //triforce för annan attack?
     }

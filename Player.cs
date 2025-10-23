@@ -23,6 +23,7 @@ namespace Zelda1
         public int maxHealth = 3;
         public bool isMoving;
         public bool isAttacking;
+        Color color;
 
         public Texture2D swordTexture;
         public Rectangle attackRect;
@@ -48,18 +49,24 @@ namespace Zelda1
         {
             texture = TextureManager.playerTexture;
             swordTexture = TextureManager.keyTexture;
+            color = Color.White;
+
             this.position = positon;
             direction = Vector2.Zero;
             facing = Vector2.Zero;
             speed = 200f;
+
             health = 3;
             maxHealth = 3;
+
             isMoving = false;
             isAttacking = false;
+
             rect = new Rectangle((int)position.X+5, (int)position.Y+5, 30, 30);
+
             attackTimer.resetAndStart(1.0);
             moveTimer.resetAndStart(0.1);
-            damageTimer.resetAndStart(1.0);
+            damageTimer.resetAndStart(0.0);
 
             walkLeftAnim = new AnimationManager(AnimationManager.playerWalkLeft, 5.0f);
             walkRightAnim = new AnimationManager(AnimationManager.playerWalkRight, 5.0f);
@@ -72,7 +79,6 @@ namespace Zelda1
             attackUpAnim = new AnimationManager(AnimationManager.attackUpAnim, 5.0f);
 
             deathAnim = new AnimationManager(AnimationManager.deathAnim, 3.0f);
-
             currentAnim = walkRightAnim;
         }
 
@@ -83,7 +89,7 @@ namespace Zelda1
             damageTimer.Update(gameTime.ElapsedGameTime.TotalSeconds);
 
             if (attackTimer.isDone()) { isAttacking = false; }
-            
+            color = damageTimer.isDone() && !isDead ? Color.White : Color.Red;
 
             //KeyMouseReader.Update();
             // KeyMouseReader.KeyPressed(Keys.Escape); använd för att tvinga släppa+trycka
@@ -221,10 +227,10 @@ namespace Zelda1
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(texture, rect, currentAnim.GetCurrentRect(), Color.White);
+            sb.Draw(texture, rect, currentAnim.GetCurrentRect(), color);
             if (isAttacking)
             {
-                sb.Draw(swordTexture, attackRect, Color.White);
+                sb.Draw(swordTexture, attackRect, Color.Black);
 
             }
 

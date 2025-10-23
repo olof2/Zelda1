@@ -83,17 +83,11 @@ namespace Zelda1
             damageTimer.Update(gameTime.ElapsedGameTime.TotalSeconds);
 
             if (attackTimer.isDone()) { isAttacking = false; }
-            //if (isDead)
-            //{
-            //    currentAnim.setPlay();
-            //    currentAnim.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            //    return;
-            //}
+            
 
             //KeyMouseReader.Update();
             // KeyMouseReader.KeyPressed(Keys.Escape); använd för att tvinga släppa+trycka
 
-            //currentAnim = walkLeftAnim;
             currentAnim.setSpeed(6f);
             (isMoving || isAttacking || isDead ? (Action)currentAnim.setPlay : currentAnim.setPause)();
             currentAnim.Update((float)gameTime.ElapsedGameTime.TotalSeconds);

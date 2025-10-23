@@ -24,9 +24,10 @@ namespace Zelda1
 
         enum GameState { Start, Play, Pause, Dying, GameOver }
         GameState currentGameState = GameState.Start;
+        bool gameVictory = false;
 
         List<Enemy> enemies = new List<Enemy>();
-        List<Item> items= new List<Item>();
+        //List<Item> items= new List<Item>();
 
 
         public Game1()
@@ -57,7 +58,7 @@ namespace Zelda1
             tileArray = levelManager.tileArray;
             player = levelManager.player;
             enemies = LevelManager.enemies;
-            items = LevelManager.items;
+            //items = LevelManager.items;
 
             deathTimer.resetAndStart(1.0);
 
@@ -78,7 +79,7 @@ namespace Zelda1
         {
 
             //lägg till keymouse reader för pause-knapper?
-            //KeyMouseReader.Update();
+            KeyMouseReader.Update();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -97,25 +98,41 @@ namespace Zelda1
             else if (currentGameState == GameState.Play)
             {
                 Debug.WriteLine("Gamestate play");
+                //LevelManager.Update(gameTime);
 
                 player.Update(gameTime);
-                foreach (Item item in items)
+
+                foreach (Item item in LevelManager.items)
                 {
                     if (player.rect.Intersects(item.rect) && !item.isCollected)
                     {
-                        Debug.WriteLine("item picked up!");
+                        //Debug.WriteLine("item picked up!");
                         item.isCollected = true;
                         break;
                     }
-                    
-                }
 
-                //fortsätt här, lägg till logic för att kolla om key är upplockad
-                //if LevelManager.key.isCollected;
-                //line above funkar inte
+                    if (LevelManager.items[1].isCollected)
+                    {
+                        Debug.WriteLine("Key collected!");
+                        foreach (Tile tile in tileArray)
+                        {
+                            //kolla om tile är dörr
+                            if (tile.texture == TextureManager.doorTexture)
+                            {
+                                tile.texture = TextureManager.openDoorTexture;
+                                tile.isWalkable = true;
+                                tile.enemyBlock = false;
+                            }
+                        }
+                    }
 
-                {
-                    Debug.WriteLine("Key collected, you can now open the door!");
+                    if (LevelManager.items[0].isCollected)
+                    {
+                        Debug.WriteLine("you found zelda!");
+                        gameVictory = true;
+                        currentGameState = GameState.GameOver;
+                    }
+
                 }
 
                 foreach (Enemy enemy in enemies)
@@ -143,7 +160,7 @@ namespace Zelda1
                     }
                 }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.P))
+                if (KeyMouseReader.KeyPressed(Keys.P))
                 {
                     currentGameState = GameState.Pause;
                 }
@@ -160,7 +177,7 @@ namespace Zelda1
                 // P för unpause, R för restart
 
                 Debug.WriteLine("Gamestate Paused");
-                if (Keyboard.GetState().IsKeyDown(Keys.P))
+                if (KeyMouseReader.KeyPressed(Keys.P))
                 {
                     currentGameState = GameState.Play;
                 }
@@ -221,7 +238,7 @@ namespace Zelda1
                     tile.Draw(_spriteBatch);
                 }
                 player.Draw(_spriteBatch);
-                foreach (Item item in items) { item.Draw(_spriteBatch); }
+                foreach (Item item in LevelManager.items) { item.Draw(_spriteBatch); }
                 foreach (Enemy _e in enemies) { _e.Draw(_spriteBatch); }
             }
 
@@ -239,7 +256,15 @@ namespace Zelda1
             else if (currentGameState == GameState.GameOver)
             {
                 //player.Draw(_spriteBatch);
-                _spriteBatch.DrawString(font, "Game Over\nPress R to Restart", new Vector2(300, 200), Color.White);
+                if (gameVictory)
+                {
+                    _spriteBatch.DrawString(font, "You found Zelda! congratulations!\nPress R to Restart", new Vector2(300, 200), Color.White);
+
+                }
+                else
+                {
+                    _spriteBatch.DrawString(font, "Game Over\nPress R to Restart", new Vector2(300, 200), Color.White);
+                }
             }
             
             
@@ -252,7 +277,7 @@ namespace Zelda1
         {
             //restart logic
             enemies.Clear();
-            items.Clear();
+            LevelManager.items.Clear();
             levelManager = new LevelManager(@"Level1.txt");
 
             player.isDead = false;
@@ -266,11 +291,12 @@ namespace Zelda1
             {
                 enemy.health = enemy.maxHealth;
             }
-            items = LevelManager.items;
-            foreach (Item item in items)
+            //items = LevelManager.items;
+            foreach (Item item in LevelManager.items)
             {
                 item.isCollected = false;
             }
+            gameVictory = false;
             currentGameState = GameState.Play;
         }
 

@@ -18,7 +18,7 @@ namespace Zelda1
         int tileSize = Game1.tileSize;
         Enemy enemy;
         public static List<Enemy> enemies = new List<Enemy>();
-        public Item key;
+        public Item item;
         public static List<Item> items = new List<Item>();
         public LevelManager(string fileName) 
         { 
@@ -42,10 +42,17 @@ namespace Zelda1
 
         }
 
-        public void Update(GameTime gameTime)
-        {
-            
-        }
+        //public static void Update(GameTime gameTime)
+        //{
+        //    if (items[0].isCollected)
+        //    {
+        //        Debug.WriteLine("Key collected!");
+        //        foreach (Tile tile in tileArray)
+        //        {
+
+        //        }
+        //    }
+        //}
         void CreateLevel(string fileName)
         {
             //tar listan av strings som är level och stoppar in den i en array
@@ -117,8 +124,8 @@ namespace Zelda1
                     else if (level[row][col] == 'k')
                     {
                         tileArray[col, row] = new Tile(TextureManager.grassTexture, new Vector2(col * tileSize, row * tileSize), true, false);
-                        key = new Item(TextureManager.keyTexture, new Vector2(col * tileSize, row * tileSize));
-                        items.Add(key);
+                        item = new Item(TextureManager.keyTexture, new Vector2(col * tileSize, row * tileSize));
+                        items.Add(item);
                         ////spawna KEY
                     }
                     else if (level[row][col] == 'd')
@@ -140,6 +147,8 @@ namespace Zelda1
                     else if (level[row][col] == 'z')
                     {
                         tileArray[col, row] = new Tile(TextureManager.stoneFloorTexture, new Vector2(col * tileSize, row * tileSize), true, false);
+                        item = new Item(TextureManager.zeldaTexture, new Vector2(col * tileSize, row * tileSize));
+                        items.Add(item);
                         //spawna ZELDA
                     }
                     else if (level[row][col] == '~')
@@ -160,13 +169,14 @@ namespace Zelda1
                     //m = bush1
                     //D = door
                     //- = grass
-                    //k = key
+                    //k = item
                     //d = opendoor
                     //_ = soil
                     //s = stonefloor
                     //w = wall
                     //z = zelda
                     //~ = water
+
                 }
             }
         }

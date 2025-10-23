@@ -91,6 +91,7 @@ namespace Zelda1
             if (attackTimer.isDone()) { isAttacking = false; }
             color = damageTimer.isDone() && !isDead ? Color.White : Color.Red;
 
+
             //KeyMouseReader.Update();
             // KeyMouseReader.KeyPressed(Keys.Escape); använd för att tvinga släppa+trycka
 
@@ -150,9 +151,9 @@ namespace Zelda1
                         else if (currentAnim == walkLeftAnim) { currentAnim = attackLeftAnim; }
                         else if (currentAnim == walkRightAnim) { currentAnim = attackRightAnim; }
                         Attack();
-                        Debug.WriteLine("check 1 after attack(), isattacking är " + isAttacking);
+                        //Debug.WriteLine("check 1 after attack(), isattacking är " + isAttacking);
                         attackTimer.resetAndStart(0.6);
-                        Debug.WriteLine("attacktimer startat, isattacking är " + isAttacking);
+                        //Debug.WriteLine("attacktimer startat, isattacking är " + isAttacking);
 
                     }
                 }

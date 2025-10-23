@@ -25,14 +25,7 @@ namespace Zelda1
             rect = new Rectangle((int)position.X+5, (int)position.Y+5, 30, 30);
         }
 
-        public void Update(GameTime gameTime)
-        {
-            //player = Game1.player;
-            //if (rect.Intersects(player.rect) && !isCollected)
-            //{
-            //    isCollected = true;
-            //}
-        }
+        
 
         public void Draw(SpriteBatch spriteBatch)
         {

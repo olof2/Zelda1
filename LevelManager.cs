@@ -42,17 +42,7 @@ namespace Zelda1
 
         }
 
-        //public static void Update(GameTime gameTime)
-        //{
-        //    if (items[0].isCollected)
-        //    {
-        //        Debug.WriteLine("Key collected!");
-        //        foreach (Tile tile in tileArray)
-        //        {
-
-        //        }
-        //    }
-        //}
+        
         void CreateLevel(string fileName)
         {
             //tar listan av strings som är level och stoppar in den i en array

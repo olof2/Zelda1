@@ -97,8 +97,9 @@ namespace Zelda1
 
             else if (currentGameState == GameState.Play)
             {
-                Debug.WriteLine("Gamestate play");
+                //Debug.WriteLine("Gamestate play");
                 //LevelManager.Update(gameTime);
+                Window.Title = "Health: " + player.health.ToString();
 
                 player.Update(gameTime);
 

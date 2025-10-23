@@ -111,7 +111,7 @@ namespace Zelda1
                         break;
                     }
 
-                    if (LevelManager.items[1].isCollected)
+                    if (LevelManager.items[0].isCollected)
                     {
                         Debug.WriteLine("Key collected!");
                         foreach (Tile tile in tileArray)
@@ -126,7 +126,7 @@ namespace Zelda1
                         }
                     }
 
-                    if (LevelManager.items[0].isCollected)
+                    if (LevelManager.items[1].isCollected)
                     {
                         Debug.WriteLine("you found zelda!");
                         gameVictory = true;
